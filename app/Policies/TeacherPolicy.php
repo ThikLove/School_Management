@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Teacher;
+use App\Models\User;
+
+/**
+ * Teachers are managed by admins; a teacher may view their own profile.
+ */
+class TeacherPolicy
+{
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, Teacher $teacher): bool
+    {
+        return $user->isTeacher() && $user->teacher?->is($teacher);
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Teacher $teacher): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, Teacher $teacher): bool
+    {
+        return false;
+    }
+}
